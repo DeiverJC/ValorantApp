@@ -35,6 +35,8 @@ const palette = {
 
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
+
+  valorant: "#ff4654",
 } as const
 
 export const colors = {

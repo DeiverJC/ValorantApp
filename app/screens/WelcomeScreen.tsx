@@ -1,27 +1,32 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import {
-  Text,
-} from "../components"
+import { Button, Text } from "../components"
 import { isRTL } from "../i18n"
 import { colors, spacing } from "../theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 
-const welcomeLogo = require("../../assets/images/logo.png")
+const welcomeLogo = require("../../assets/images/valorant-logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-) {
-
+export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(_props) {
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+  const { navigation } = _props
+  function goNext() {
+    navigation.navigate("Agents")
+  }
 
   return (
     <View style={$container}>
       <View style={$topContainer}>
         <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
+        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
+      </View>
+
+      <View style={[$bottomContainer, $bottomContainerInsets]}>
+        {/* <Text tx="welcomeScreen.postscript" size="md" /> */}
         <Text
           testID="welcome-heading"
           style={$welcomeHeading}
@@ -29,11 +34,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
           preset="heading"
         />
         <Text tx="welcomeScreen.exciting" preset="subheading" />
-        <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
-      </View>
-
-      <View style={[$bottomContainer, $bottomContainerInsets]}>
-        <Text tx="welcomeScreen.postscript" size="md" />
+        <Button text="Show agents" onPress={goNext} />
       </View>
     </View>
   )
@@ -41,7 +42,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
 const $container: ViewStyle = {
   flex: 1,
-  backgroundColor: colors.background,
+  backgroundColor: colors.palette.valorant,
 }
 
 const $topContainer: ViewStyle = {
@@ -63,7 +64,7 @@ const $bottomContainer: ViewStyle = {
   justifyContent: "space-around",
 }
 const $welcomeLogo: ImageStyle = {
-  height: 88,
+  height: 300,
   width: "100%",
   marginBottom: spacing.xxl,
 }
